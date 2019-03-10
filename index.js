@@ -6,11 +6,12 @@ const balace = {};
 var character;
 
 import jutsu_types from "./jutsu.js"
+import body from "./components/humanoid.js"
+import compiler from './compiler.js'
 
-console.log(jutsu_types)
 
 
-background(204);  ellipse(50, 50, 80, 80); }
+
 
 var chakra;
 var seal;
@@ -47,4 +48,3 @@ class jutsu {
 
 // tests declare a js class. send states between files
 var clone = new jutsu("Shadow Clone", "enhancement", 8, 2)
-console.log(clone.turns_left())

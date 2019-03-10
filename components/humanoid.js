@@ -1,16 +1,6 @@
-var multipier
-// landscape
-const landscape = [16,9]
-function setup() {
-  // put setup code here
-  multipier = 50
-  createCanvas(landscape[0] * multipier, landscape[1]* multipier)
-}
+// We might need to consider gravitational pull and 名前 - な߹え  
 
-// head width 14mm height 18mm
-// 1 head = 1/5 body. Stack heads
-
-function head(scale, stacker, laDivide){
+function head(scale, laDivide){
 	// x positions are fixed
 	const xCoo = (landscape[0] * multipier)/laDivide
 
@@ -18,14 +8,45 @@ function head(scale, stacker, laDivide){
 	scale = scale/2.2
 	var height = 18*scale  
 	var width = 14*scale
-	var stacker = stacker * height
 
 	var half_of_it = height/2  
 	
 	var yCoo = (landscape[1]* multipier ) - half_of_it
 
-	return ellipse(xCoo, yCoo - stacker, 14*scale, 18*scale)
+	return console.log(xCoo, yCoo, 14*scale, 18*scale)
 
+}
+
+class humanoid {
+	constructor(){
+
+		// This contains state. 
+		// We'll also need to define strain on our shonen jump characters
+		// CHatacters are into Posing and dynamic posing
+	}
+	hair(){
+
+	}
+	head(){
+
+	}
+	hand(){
+		// Hands need to be really detailed
+
+	}
+	shoulders(){
+		// dancing shoulders
+		
+	}
+	stomach(){
+		// 3 - 3.5 heads and the focai
+	}
+	boobies(){
+
+	}
+	foot(){
+		// Should these be wheels?
+	}
 }
 
 function headStack(){
@@ -46,13 +67,5 @@ function headStack(){
 	this.head(3,3,p2_position)
 	this.head(3,4,p2_position)
 	this.head(3,5,p2_position)
-
-}
-
-function draw() {
-  // put drawing code here
-  background(25);  
-  ellipse(50, 50, 80, 80); 
-  this.headStack()
 
 }
