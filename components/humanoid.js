@@ -69,3 +69,5 @@ function headStack(){
 	this.head(3,5,p2_position)
 
 }
+
+export default humanoid;

@@ -55,27 +55,61 @@ function tallStack(){
 }
 
 function shoulderhips(){
-	var starbucks =  (landscape[0] * multipier)/2
+	var starbucks =  {x:(landscape[0] * multipier)/2}
 	var stomach = 0;
 	var insomatic = 57;
 	var hydromatic = 43;
 	var shoulder_width = 18;
 	var shoulder_height = 15; 
+
+	//tall props
+	var scale = 4;
+	var stacker = 3.5;
+
+	var shambala_wind =  {x:"ham",y:"ham",z:"tuna"} 
+	var neck = {x:10,y:4}
 	
-	var ellipse_arr;
+	// we need these elipses to move as a unit
+	var elli_arr = [];
+
+	// x positions are fixed
+	const xCoo = (landscape[0] * multipier)/2.9
+
+	// y postions are stacked
+	scale = scale/2.2
+	var height = 18*scale  
+	var width = 14*scale
+	var stacker = stacker * height
+
+	var half_of_it = height/2  
+	
+	var yCoo = (landscape[1]* multipier ) - half_of_it
+
+	var stomach = ellipse(xCoo, yCoo - stacker + 35, height-10, height-10);
+	var ball = ellipse(xCoo, yCoo - stacker, height, height);
+	var shoulder53 =  ellipse(xCoo - 35, yCoo - stacker, height-20, height-20);
+	var shoulder47 = ellipse(xCoo + 35, yCoo - stacker, height-20, height-20);
+	var handTH = ellipse(xCoo, yCoo - stacker - 10 + 9, height-10, height-20);
+	var handP3 = ellipse(xCoo+40, yCoo - stacker + 21 , height-12, height-20);
+	
+	// All energy comes from the stomach
 
 
-	return ellipse_arr
+	return [ball, shoulder53, shoulder47, handTH, handP3, stomach]
+	// var elli_arr.add(eclipse())
+
+
+	//return elli_arr
+
+}
+
+class arm{
+
 }
 
 function draw() {
   // put drawing code here
   background(50,196,223);  
-  this.tallStack()
-  
-  for(var i ; i < this.shoulderhips.length; i++){
-// The test
-console.log(this.shoulderhips[i])
-  this.shoulderhips()[i]
-}
+  //this.tallStack()
+  this.shoulderhips();
 }
