@@ -84,18 +84,20 @@ function shoulderhips(){
 	var half_of_it = height/2  
 	
 	var yCoo = (landscape[1]* multipier ) - half_of_it
+	yCoo = yCoo - stacker + 35;
 
-	var stomach = ellipse(xCoo, yCoo - stacker + 35, height-10, height-10);
-	var ball = ellipse(xCoo, yCoo - stacker, height, height);
-	var shoulder53 =  ellipse(xCoo - 35, yCoo - stacker, height-20, height-20);
-	var shoulder47 = ellipse(xCoo + 35, yCoo - stacker, height-20, height-20);
-	var handTH = ellipse(xCoo, yCoo - stacker - 10 + 9, height-10, height-20);
-	var handP3 = ellipse(xCoo+40, yCoo - stacker + 21 , height-12, height-20);
+	var stomach = {module1: ellipse(xCoo, yCoo, height-10, height-10)};
+	var head = ellipse(xCoo, yCoo - 70, width, height);
+	//var ball = ellipse(xCoo, yCoo - stacker, height, height);
+	var shoulder53 =  ellipse(xCoo - 35, yCoo - 35, height-20, height-20);
+	var shoulder47 = ellipse(xCoo + 35, yCoo - 35, height-20, height-20);
+	var handTH = ellipse(xCoo, yCoo - 35 , height-10, height-20);
+	var handP3 = ellipse(xCoo+40, yCoo - 14 , height-12, height-20);
 	
 	// All energy comes from the stomach
 
 
-	return [ball, shoulder53, shoulder47, handTH, handP3, stomach]
+	return [head,shoulder53, shoulder47, handTH, handP3, stomach.module1]
 	// var elli_arr.add(eclipse())
 
 
@@ -103,8 +105,9 @@ function shoulderhips(){
 
 }
 
-class arm{
-
+function spider_axel(){
+	// This gives our character a cool dancer feel
+	//	setTimeout() new route = old route - time
 }
 
 function draw() {
