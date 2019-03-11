@@ -1,15 +1,17 @@
-var speed = 2.5;
-var diameter = 20;
-var x;
-var y;
+var angle = 0.0;
+var offset = 30;
+var scalar = 3.9;
+var speed = 0.05;
 function setup() {
 createCanvas(240, 120);
-x = width/2;
-y = height/2;
-background(204);
 }
 function draw() {
-x += random(-speed, speed);
-y += random(-speed, speed);
-ellipse(x, y, diameter, diameter);
+background(0);
+var y1 = offset + cos(angle) * scalar;
+var y2 = offset + sin(angle + 10) * scalar;
+var y3 = offset + sin(angle + 0.9) * scalar;
+ellipse( 80, y1+15, 20, 40);
+ellipse(120, y2, 40, 40);
+ellipse(160, y3+15, 20, 40);
+angle += speed;
 }

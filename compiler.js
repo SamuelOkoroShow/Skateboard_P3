@@ -3,8 +3,10 @@
 // landscape at 16:9 vision
 const landscape = [16,9]
 
+var angle = 0.0;
+
 // Avatar global variables
-var starbucks =  {x:(landscape[0] * multipier)/2}
+	var starbucks =  {x:(landscape[0] * multipier)/2}
 	var insomatic = 57;
 	var hydromatic = 43;
 	var shoulder_width = 18;
@@ -73,21 +75,34 @@ function display(someArray){
 function shoulderhips(){
 	width=14*2.2;
 	height=18*2.2;
+
+
+var offset = 30;
+var scalar = 3;
+var speed = 0.04;
+
+//This is the phyiscs
+var y1 = yCoo + cos(angle) * scalar;
+var y2 = yCoo + sin(angle + 1) * scalar;
+var y3 = yCoo + sin(angle + 0.9) * scalar;
+
+angle += speed;
+
 	var stomach = {
-		focus1: {x: xCoo, y:yCoo+3},
-		focus2: {x: xCoo, y:yCoo-3},
-		rightOrigin:{x: xCoo - 15, y: yCoo + 0, width: height-20, height: height-10},
-		module2: {x: xCoo, y: yCoo, width: height-10, height: height-10},
-		leftOrigin: {x: xCoo + 15, y:yCoo + 3,width : height-20, height: height-10}
+		focus1: {x: xCoo, y:y2+3},
+		focus2: {x: xCoo, y:y1-3},
+		rightOrigin:{x: xCoo - 15, y: y1 + 0, width: height-20, height: height-10},
+		module2: {x: xCoo, y: y2, width: height-10, height: height-10},
+		leftOrigin: {x: xCoo + 15, y:y3 + 3,width : height-20, height: height-10}
 		
 	};
 
 
 
 	var head = {x:stomach.focus2.x, y:stomach.focus2.y - 70, width:width, height:height};
-	var ball = {x:xCoo, y:yCoo - 30, width:height, height:height};
-	var shoulder53 =  {x: xCoo - 35, y: yCoo - 35, width: height-20, height:height-20};
-	var shoulder47 = {x: xCoo + 35, y: yCoo - 35, width: height-20, height: height-20};
+	var ball = {x:xCoo, y:stomach.focus1.y - 30, width:height, height:height};
+	var shoulder53 =  {x: xCoo - 35, y: stomach.focus1.y - 35, width: height-20, height:height-20};
+	var shoulder47 = {x: xCoo + 35, y: stomach.focus1.y - 35, width: height-20, height: height-20};
 	var handTH = {x:xCoo, y:yCoo - 35 , width:height-10, height: height-20};
 	var handP3 = {x:xCoo+40, y:yCoo - 14 , width:height-12, height:height-20};
 	// All energy comes from the stomach
@@ -100,7 +115,7 @@ function shoulderhips(){
 	//right foot
 	var foot2 = {x:stomach.focus2.x+36, y:landscape[1]* multipier , width:height-14, height:height-24};
 
-	return [head,ball,shoulder53, shoulder47, handTH, handP3, stomach, knee1,knee2, foot1, foot2]
+	return [head,ball,shoulder53, shoulder47, handTH, handP3, stomach, knee1,knee2, foot1, foot2, stomach.rightOrigin,stomach.module2, stomach.leftOrigin]
 	// var elli_arr.add(eclipse())
 
 	//return elli_arr
@@ -138,7 +153,7 @@ function draw() {
   // put drawing code here
   background(50,196,223);  
   //this.tallStack()
-
+  console.log(sin(19))
  	
   this.display(this.shoulderhips())
   //setTimeout(() => this.setState({}),2000)
