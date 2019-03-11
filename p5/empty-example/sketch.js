@@ -1,12 +1,15 @@
-var radius = 40;
-var x = -radius;
-var speed = 2.3;
+var speed = 2.5;
+var diameter = 20;
+var x;
+var y;
 function setup() {
 createCanvas(240, 120);
-ellipseMode(RADIUS);
+x = width/2;
+y = height/2;
+background(204);
 }
 function draw() {
-background(0);
-x += speed; // Increase the value of x
-arc(x, 60, radius, radius, 0.52, 5.76);
+x += random(-speed, speed);
+y += random(-speed, speed);
+ellipse(x, y, diameter, diameter);
 }

@@ -1,60 +1,10 @@
 // This is the multiper for the frame
-var multipier
-
-// Avatar global variables
-var dance_foci
-var stomach = 0;
-var head,shoulder53, shoulder47, handTH, handP3, stomach.module1;
-
-//Animatable Variables why dont we ancore the rest of the boy and animate to jump
-var xCoo;
-var yCoo;
-var state;
-
+ var multipier = 50
 // landscape at 16:9 vision
 const landscape = [16,9]
-function setup() {
-  // put setup code here
-  frameRate(30)
-  multipier = 50
-  createCanvas(landscape[0] * multipier, landscape[1]* multipier)
-}
 
-// This is the formular for our Canvas gruond
-	var ground = (landscape[1]* multipier )
-
-// tall width 14mm height 18mm
-// 1 tall = 1/5 body. Stack talls
-
-function tall(scale, stacker, laDivide){
-	// x positions are fixed
-	xCoo = (landscape[0] * multipier)/laDivide
-
-	// y postions are stacked
-	scale = scale/2.2
-	var height = 18*scale  
-	var width = 14*scale
-	var stacker = stacker * height
-
-	var half_of_it = height/2  
-	yCoo = (landscape[1]* multipier ) - half_of_it
-
-	return ellipse(xCoo, yCoo - stacker, 14*scale, 18*scale)
-
-}
-
-
-
-function display(someArray){
-	for(var i = 0; i<someArray; i++){	
-		ellipse(someArray.x, someArray.y, someArray.width, someArray.height)
-	}
-}
-
-
-
-function shoulderhips(){
-	var starbucks =  {x:(landscape[0] * multipier)/2}
+// Avatar global variables
+var starbucks =  {x:(landscape[0] * multipier)/2}
 	var insomatic = 57;
 	var hydromatic = 43;
 	var shoulder_width = 18;
@@ -66,6 +16,7 @@ function shoulderhips(){
 
 	var shambala_wind =  {x:"ham",y:"ham",z:"tuna"} 
 	var neck = {x:10,y:4}
+
 	
 	// we need these elipses to move as a unit
 	var elli_arr = [];
@@ -75,7 +26,7 @@ function shoulderhips(){
 	//by default we're all falling down 
 
 	// x positions are fixed
-	const xCoo = (landscape[0] * multipier)/2.9
+	var xCoo = (landscape[0] * multipier)/2.9
 
 	// y postions are stacked
 	scale = scale/2.2
@@ -87,18 +38,46 @@ function shoulderhips(){
 	
 	var yCoo = (landscape[1]* multipier ) - half_of_it
 	yCoo = yCoo - stacker + 35;
+var dance_foci
+var stomach = 0;
+var head,shoulder53, shoulder47, handTH, handP3, stomach;
 
-if(!yCoo == ground){
-	yCoo += ani_speed
+//Animatable Variables why dont we ancore the rest of the boy and animate to jump
+var state;
+
+
+function setup() {
+  // put setup code here
+  createCanvas(landscape[0] * multipier, landscape[1]* multipier)
+
+  // For Humanoid Motion and also Elipse practice
+
 }
-	
+
+// This is the formular for our Canvas gruond
+	var ground = (landscape[1]* multipier )
+
+// tall width 14mm height 18mm
+// 1 tall = 1/5 body. Stack talls
 
 
+function display(someArray){
+	for(var i = 0; i<someArray.length; i++){	
+		//console.log(someArray[i]);
+		ellipse(someArray[i].x, someArray[i].y, someArray[i].width, someArray[i].height)
+	}
+}
+
+
+
+function shoulderhips(){
+	width=14*2.2;
+	height=18*2.2;
 	var stomach = {
 		focus1: {x: xCoo, y:yCoo+3},
 		focus2: {x: xCoo, y:yCoo-3},
 		rightOrigin:{x: xCoo - 15, y: yCoo + 0, width: height-20, height: height-10},
-		module2: ellipse(xCoo, yCoo, height-10, height-10},
+		module2: {x: xCoo, y: yCoo, width: height-10, height: height-10},
 		leftOrigin: {x: xCoo + 15, y:yCoo + 3,width : height-20, height: height-10}
 		
 	};
@@ -113,18 +92,16 @@ if(!yCoo == ground){
 	var handP3 = {x:xCoo+40, y:yCoo - 14 , width:height-12, height:height-20};
 	// All energy comes from the stomach
 	// LEFT knee
-	var knee1 = ellipse(stomach.focus1.x-16, stomach.focus2.y + 32, height-20, height-20);
+	var knee1 = {x:stomach.focus1.x-16, y:stomach.focus2.y + 32, width:height-20, height: height-20};
 	//RIGHT knee
-	var knee2 = ellipse(stomach.focus1.x+18, stomach.focus2.y + 40, height-20, height-20);
+	var knee2 = {x:stomach.focus1.x+18, y:stomach.focus2.y + 40, width:height-20, height:height-20};
 	//left foot
-	var foot1 = ellipse(stomach.focus2.x-22, landscape[1]* multipier , height-14, height-24);
+	var foot1 = {x:stomach.focus2.x-22, y:landscape[1]* multipier , width:height-14, height:height-24};
 	//right foot
-	var foot2 = ellipse(stomach.focus2.x+36, landscape[1]* multipier , height-14, height-24);
+	var foot2 = {x:stomach.focus2.x+36, y:landscape[1]* multipier , width:height-14, height:height-24};
 
-	//return [head,shoulder53, shoulder47, handTH, handP3, stomach.module1]
+	return [head,ball,shoulder53, shoulder47, handTH, handP3, stomach, knee1,knee2, foot1, foot2]
 	// var elli_arr.add(eclipse())
-
-	this.display(head)
 
 	//return elli_arr
 
@@ -161,9 +138,10 @@ function draw() {
   // put drawing code here
   background(50,196,223);  
   //this.tallStack()
-  
+
+ 	
+  this.display(this.shoulderhips())
   //setTimeout(() => this.setState({}),2000)
 
-  this.shoulderhips();
 
 }

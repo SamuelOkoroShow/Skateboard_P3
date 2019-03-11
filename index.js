@@ -7,7 +7,7 @@ var character;
 
 import jutsu_types from "./jutsu.js"
 import body from "./components/humanoid.js"
-import compiler from './compiler.js'
+
 
 
 
