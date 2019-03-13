@@ -5,10 +5,12 @@ var force_init = false;
 
 // init dv
 var dSwitch =false;
-var bono = 30
+var bono = 50
+var tuskey = 0;
 
 //init truttle
 var vSwitch = true;
+
 function skateboard(){ 
 var wheel1 = {
 	type:'ellipse',
@@ -92,7 +94,7 @@ function coast50(){
 function render(someArray){
 
 	for(var i = 0; i<someArray.length; i++){	
-		console.log(someArray[i]);
+		//console.log(someArray[i]);
 		if(someArray[i].type == 'ellipse'){
 		ellipse(someArray[i].x, someArray[i].y, someArray[i].width, someArray[i].height)
 			}
@@ -108,9 +110,13 @@ function displacement(pressure, mass){
 
 	// switch dv
 	dSwitch = true
-	
+	//fast
+	var speed = 1.
+
+
 	// lets try adding force
-	bono = bono * this.force(pressure,mass)/21
+	bono = (bono + this.force(pressure,mass)) * speed
+	//console.log(this.force(pressure,mass))
 	//this.force(pressure,mass) * 3
 
 	//should not reverse
@@ -138,39 +144,46 @@ function force(pitch, mass){
 	if(vSwitch){
 
 		motion = "accelerating";
-		velocity++;
-	}
+		tuskey++;
+		velocity = tuskey/10
+		if (velocity == 5){
+			tuskey = invertIntergral_velocity
+		}
+		}
 
-	if (velocity == invertIntergral_velocity){
-		
+	if (tuskey == invertIntergral_velocity){
+		console.log("max speed")
 		vSwitch = false;
-		velocity--;
+		tuskey--;
+
 	}
 	if(!vSwitch){
 		
 		motion = "decelerating"
-		velocity--;
-		}
+		tuskey--;
+		velocity = tuskey/10
+
+	}
 
 	if (velocity < 0){
 			velocity = 0
 		}
 
-		//if(vSwitch)
-		//console.log("invertIntergral :" + invertIntergral_velocity+ "Skate_Velocity = " + velocity + motion)
-		//else
-		// console.log("min :" + 0 + "In Motion Skate_Velocity = " + velocity + motion)
+		if(vSwitch)
+		console.log("invertIntergral :" + invertIntergral_velocity+ "Skate_Velocity = " + velocity + motion)
+		else
+		 console.log("min :" + 0 + "In Motion Skate_Velocity = " + velocity + motion)
 		
 
 	// end displayment = distance + start displacement
-	return velocity
+	return velocity 
 		}
 
 function draw() {
   // put drawing code here
   background(50,196,223);
   //how to calculate pitch. Pitch = force at lim x-> 0
-  this.displacement(4,1)  
+  this.displacement(6,7)  
   //ellipse(160, 210, 20, 40)
   this.render(this.skateboard())
 }
