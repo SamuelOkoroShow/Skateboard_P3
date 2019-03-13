@@ -1,9 +1,18 @@
 //Kewy word while designing skateboards: Equidistant
 
+var velocity;
 var force_init = false;
+
+// init dv
+var dSwitch =false;
+var bono = 30
+
+//init truttle
+var vSwitch = true;
+function skateboard(){ 
 var wheel1 = {
 	type:'ellipse',
-	x:30,
+	x:bono,
 	y:250,
 	width:24,
 	height:24
@@ -15,7 +24,16 @@ var wheel2= {
 	width:24,
 	height:24
 }
-var truck; 
+var truck1={
+	type: 'triangle',
+	x1:wheel1.x,
+	y1:wheel1.y,
+	x2:wheel2.x,
+	y2:wheel2.y,
+	x3:(wheel1.x+wheel2.x)/2,
+	y3:(wheel1.y+wheel1.height)/4
+
+}; 
 var screw2 = {
 	type:'ellipse',
 	x: wheel2.x,
@@ -30,9 +48,10 @@ var screw1 = {
 	width: 10,
 	height:10
 };
+var deckSet = 25
 var deck1 = {
 	type:'rec',
-	x:3,
+	x:wheel1.x-deckSet,
 	y:230,
 	width:180,
 	height:3
@@ -40,7 +59,7 @@ var deck1 = {
 };
 var deck2 = {
 	type:'rec',
-	x:3,
+	x:wheel1.x - deckSet,
 	y:233,
 	width:210,
 	height:3
@@ -48,7 +67,7 @@ var deck2 = {
 };
 var deck3 = {
 	type:'rec',
-	x:3,
+	x:wheel1.x - deckSet,
 	y:236,
 	width:170,
 	height:3
@@ -56,11 +75,13 @@ var deck3 = {
 };
 
 var skateboard = [wheel1,screw1, wheel2, screw2, deck1, deck3]
+return skateboard
+}
 var force;
 // I use force to pitch velocity
 // Accelarate and decelerate using intergration
 function setup(){
-  createCanvas(480,270)
+  createCanvas(1480,270)
 }
 
 function coast50(){
@@ -81,57 +102,75 @@ function render(someArray){
 		}
 }
 
-function displacement(){
+function displacement(pressure, mass){
+	// init state on particle displacment
 
+
+	// switch dv
+	dSwitch = true
+	
+	// lets try adding force
+	bono = bono * this.force(pressure,mass)/21
+	//this.force(pressure,mass) * 3
+
+	//should not reverse
 }
 
-function force(pitch){
+function force(pitch, mass){
 		// initialize()
 
 	var rest;
-	var lacement = pitch * tan(24.91)
-	var max_velocity;
+	var lacement = pitch * tan(24.91);
+	var invertIntergral_velocity;
+
+	// ex invertIntergral velocity is 72 at 
 	var ratp = 12;
-	var roll = ratp
+	var roll = ratp;
+	var motion;
 
-	max_velocity = pitch * roll;
-	var velocity = 0;
+	invertIntergral_velocity = pitch * roll;
+
+	if(velocity == null){
+		velocity = 0;
+	}
 	//boolean v swtch
-	var vSwitch = true // JANooR
-	 
-	if(pitch > 0 && oddometer){
-		var motion = "accelerating";
-		velocity = 0
-	}
-	if(velocity < max_velocity){
+
+	if(vSwitch){
+
+		motion = "accelerating";
 		velocity++;
-		
-	}else{
-		oddometer = false;
-		velocity--;
-		if(!oddometer){
-			motion = "decelerating"
-		}
-		}
-
-		if(oddometer)
-		console.log("max :" + max_velocity+ "Skate_Velocity = " + velocity + motion)
-		else
-		console.log("min :" + 0 + "Skate_Velocity = " + velocity + motion)
-	// expected max : 40 velocity=0++ accelerating
-	// epected min : 0 velocity 40-- decelerating
-	// end displayment = distance + start displacement
-
-		if(velocity = 0){
-			force_init = false;
-		}
 	}
+
+	if (velocity == invertIntergral_velocity){
+		
+		vSwitch = false;
+		velocity--;
+	}
+	if(!vSwitch){
+		
+		motion = "decelerating"
+		velocity--;
+		}
+
+	if (velocity < 0){
+			velocity = 0
+		}
+
+		//if(vSwitch)
+		//console.log("invertIntergral :" + invertIntergral_velocity+ "Skate_Velocity = " + velocity + motion)
+		//else
+		// console.log("min :" + 0 + "In Motion Skate_Velocity = " + velocity + motion)
+		
+
+	// end displayment = distance + start displacement
+	return velocity
+		}
 
 function draw() {
   // put drawing code here
   background(50,196,223);
   //how to calculate pitch. Pitch = force at lim x-> 0
-  this.force(6)  
+  this.displacement(4,1)  
   //ellipse(160, 210, 20, 40)
-  this.render(skateboard)
+  this.render(this.skateboard())
 }

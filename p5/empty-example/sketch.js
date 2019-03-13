@@ -23,3 +23,4 @@ if ((angle > QUARTER_PI) || (angle < 0)) {
 angleDirection *= -1;
 }
 }
+
