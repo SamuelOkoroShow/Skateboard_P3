@@ -1,17 +1,25 @@
 var angle = 0.0;
-var offset = 30;
-var scalar = 3.9;
-var speed = 0.05;
+var angleDirection = 1;
+var speed = 0.005;
 function setup() {
-createCanvas(240, 120);
+createCanvas(120, 120);
 }
 function draw() {
-background(0);
-var y1 = offset + cos(angle) * scalar;
-var y2 = offset + sin(angle + 10) * scalar;
-var y3 = offset + sin(angle + 0.9) * scalar;
-ellipse( 80, y1+15, 20, 40);
-ellipse(120, y2, 40, 40);
-ellipse(160, y3+15, 20, 40);
-angle += speed;
+background(204);
+translate(20, 25); // Move to start position
+rotate(angle);
+strokeWeight(12);
+line(0, 0, 40, 0);
+translate(40, 0); // Move to next joint
+rotate(angle * 2.0);
+strokeWeight(6);
+line(0, 0, 30, 0);
+translate(30, 0); // Move to next joint
+rotate(angle * 2.5);
+strokeWeight(3);
+line(0, 0, 20, 0);
+angle += speed * angleDirection;
+if ((angle > QUARTER_PI) || (angle < 0)) {
+angleDirection *= -1;
+}
 }
