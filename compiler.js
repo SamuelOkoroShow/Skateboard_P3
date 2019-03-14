@@ -1,189 +1,105 @@
-//Kewy word while designing skateboards: Equidistant
-
-var velocity;
-var force_init = false;
-
-// init dv
-var dSwitch =false;
-var bono = 50
-var tuskey = 0;
-
-//init truttle
-var vSwitch = true;
-
-function skateboard(){ 
-var wheel1 = {
+//For hand
+var palm = {
 	type:'ellipse',
-	x:bono,
-	y:250,
-	width:24,
-	height:24
+	x:100,
+	y:100,
+	width:8*15,
+	height:6*15
 }
-var wheel2= {
+var mouth = {
 	type:'ellipse',
-	x:wheel1.x+80,
-	y:250,
-	width:24,
-	height:24
-}
-var truck1={
-	type: 'triangle',
-	x1:wheel1.x,
-	y1:wheel1.y,
-	x2:wheel2.x,
-	y2:wheel2.y,
-	x3:(wheel1.x+wheel2.x)/2,
-	y3:(wheel1.y+wheel1.height)/4
-
-}; 
-var screw2 = {
-	type:'ellipse',
-	x: wheel2.x,
-	y: wheel2.y,
-	width: 10,
-	height:10
-};
-var screw1 = {
-	type:'ellipse',
-	x: wheel1.x,
-	y: wheel1.y,
-	width: 10,
-	height:10
-};
-var deckSet = 25
-var deck1 = {
-	type:'rec',
-	x:wheel1.x-deckSet,
-	y:230,
-	width:180,
-	height:3
-
-};
-var deck2 = {
-	type:'rec',
-	x:wheel1.x - deckSet,
-	y:233,
-	width:210,
-	height:3
-
-};
-var deck3 = {
-	type:'rec',
-	x:wheel1.x - deckSet,
-	y:236,
-	width:170,
-	height:3
-
-};
-
-var skateboard = [wheel1,screw1, wheel2, screw2, deck1, deck3]
-return skateboard
-}
-var force;
-// I use force to pitch velocity
-// Accelarate and decelerate using intergration
-function setup(){
-  createCanvas(1480,270)
+	x:palm.x,
+	y:palm.y+(palm.height/2) - 5,
+	width:50,
+	height:30
 }
 
-function coast50(){
+var indexPositi = 1;
+var middlePositi = 1.1;
+var ringPositi = 1.08;
+var pinkie = .55;
+var size = 25;
+
+var finger = {
+	
+	thumb: {
+
+		knuckle: {
+			// xy cordinates
+			type:'ellipse',
+			x:mouth.x + 50,
+			y:mouth.y - 15,
+			width: size * indexPositi + 10,
+			height: size * indexPositi
+
+		}
+	},
+	trigger: {
+		knuckle: {
+			// xy cordinates
+			type:'ellipse',
+			x: mouth.x + 50,
+			y:mouth.x -20,
+			width: size * indexPositi,
+			height: size * indexPositi
+		}
+	},
+	middle: {},
+	ring:{},
+	pinkie:{
+		knuckle: {
+			// xy cordinates
+			type:'ellipse',
+			x: mouth.x - 50,
+			y:mouth.x - 25,
+			width: size * pinkie,
+			height: size * pinkie
+		},
+		wonka: {
+			// xy cordinates
+			// probably angles are important as well
+			type:'ellipse',
+			rotate: 46,
+			x: mouth.x - 50,
+			y:mouth.x - 45,
+			width: size * pinkie,
+			height: (size * pinkie * 3)
+		}
+	},
 	
 }
 
+var hand = [palm,mouth, finger.trigger.knuckle, finger.pinkie.knuckle, finger.pinkie.wonka, finger.thumb.knuckle]
+
+function setup(){
+  createCanvas(780,270)
+}
 
 function render(someArray){
-
+		
+	strokeWeight(3);
 	for(var i = 0; i<someArray.length; i++){	
 		//console.log(someArray[i]);
 		if(someArray[i].type == 'ellipse'){
+			
+			if(someArray[i].rotate){
+				translate(finger.pinkie.knuckle.x, finger.pinkie.knuckle.y)
+				rotate( -someArray[i].rotate/ 360.0);
+						}
 		ellipse(someArray[i].x, someArray[i].y, someArray[i].width, someArray[i].height)
 			}
 		if(someArray[i].type == 'rec'){
 		rect(someArray[i].x, someArray[i].y, someArray[i].width, someArray[i].height)
 		}
 		}
+
 }
-
-function displacement(pressure, mass){
-	// init state on particle displacment
-
-
-	// switch dv
-	dSwitch = true
-	//fast
-	var speed = 1.
-
-
-	// lets try adding force
-	bono = (bono + this.force(pressure,mass)) * speed
-	//console.log(this.force(pressure,mass))
-	//this.force(pressure,mass) * 3
-
-	//should not reverse
-}
-
-function force(pitch, mass){
-		// initialize()
-
-	var rest;
-	var lacement = pitch * tan(24.91);
-	var invertIntergral_velocity;
-
-	// ex invertIntergral velocity is 72 at 
-	var ratp = 12;
-	var roll = ratp;
-	var motion;
-
-	invertIntergral_velocity = pitch * roll;
-
-	if(velocity == null){
-		velocity = 0;
-	}
-	//boolean v swtch
-
-	if(vSwitch){
-
-		motion = "accelerating";
-		tuskey++;
-		velocity = tuskey/10
-		if (velocity == 5){
-			tuskey = invertIntergral_velocity
-		}
-		}
-
-	if (tuskey == invertIntergral_velocity){
-		console.log("max speed")
-		vSwitch = false;
-		tuskey--;
-
-	}
-	if(!vSwitch){
-		
-		motion = "decelerating"
-		tuskey--;
-		velocity = tuskey/10
-
-	}
-
-	if (velocity < 0){
-			velocity = 0
-		}
-
-		if(vSwitch)
-		console.log("invertIntergral :" + invertIntergral_velocity+ "Skate_Velocity = " + velocity + motion)
-		else
-		 console.log("min :" + 0 + "In Motion Skate_Velocity = " + velocity + motion)
-		
-
-	// end displayment = distance + start displacement
-	return velocity 
-		}
 
 function draw() {
   // put drawing code here
   background(50,196,223);
   //how to calculate pitch. Pitch = force at lim x-> 0
-  this.displacement(6,7)  
+  //this.displacement(6,7)  
   //ellipse(160, 210, 20, 40)
-  this.render(this.skateboard())
+  this.render(this.hand)
 }
