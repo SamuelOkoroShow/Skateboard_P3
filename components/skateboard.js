@@ -1,24 +1,35 @@
 //Kewy word while designing skateboards: Equidistant
 
 var velocity;
-var force_init = false;
+var kung_fu_init = false;
 
 // init dv
 var dSwitch =false;
+
+
 var bono = 50
 var tuskey = 0;
 var truckReducers = 10;
+var deckSlope = 230;
+var deckRadian = 0;
+
+var deckSet = 25
+var radians;
+var angle;
+var radians =  3.141592653589793 * angle/180
 
 //init truttle
 var vSwitch = true;
 var wheel_start_y = 250;
-var wheel1_x = 30
-var average = 90
+var wheel1_x = 20;
+var average = 80;
 var wheel2_x = (2*average) - wheel1_x
 var wheel_y = wheel_start_y
+
 function skateboard(){ 
 
 var wheel1 = {
+	id: 0,
 	type:'ellipse',
 	x:wheel1_x,
 	y:wheel_y,
@@ -26,6 +37,7 @@ var wheel1 = {
 	height:24
 }
 var wheel2= {
+	id: 1,
 	type:'ellipse',
 	x:wheel2_x,
 	y:wheel_start_y,
@@ -33,6 +45,7 @@ var wheel2= {
 	height:24
 }
 var truck1={
+	id: 2,
 	type: 'triangle',
 	x1:wheel1.x,
 	y1:wheel1.y,
@@ -43,6 +56,7 @@ var truck1={
 
 }; 
 var screw2 = {
+	id: 3,
 	type:'ellipse',
 	x: wheel2.x,
 	y: wheel2.y,
@@ -50,14 +64,16 @@ var screw2 = {
 	height:10
 };
 var screw1 = {
+	id: 4,
 	type:'ellipse',
 	x: wheel1.x,
 	y: wheel1.y,
 	width: 10,
 	height:10
 };
-var deckSet = 25
+
 var deck1 = {
+	id: 5,
 	type:'rec',
 	x:wheel1.x-deckSet,
 	y:230,
@@ -66,6 +82,7 @@ var deck1 = {
 
 };
 var deck2 = {
+	id: 6,
 	type:'rec',
 	x:wheel1.x - deckSet,
 	y:233,
@@ -73,21 +90,24 @@ var deck2 = {
 	height:3
 
 };
+
+
 var deck3 = {
+	id: 7,
 	type:'rec',
-	x:wheel1.x - deckSet,
-	y:236,
+	x:wheel1.x + deckSet,
+	y:deckSlope,
 	width:170,
 	height:3
 
 };
 
-var skateboard = [wheel1,screw1, wheel2, screw2, deck1, deck3]
+var skateboard = [wheel1,screw1, wheel2, screw2]
 return skateboard
 }
-var force;
-var slope = 1/4
-;
+var kung_fu;
+var slope = 1/4;
+angle = -0
 var folcrum;
 var max_slope = 30
 function coast50(){
@@ -97,13 +117,21 @@ function coast50(){
 // Only the deck rotates
 
 function random_slope(){
-	// use this to anchor slope force
+	// use this to anchor slope kung_fu
+
+
+	//console.log(3.141592653589793 * angle/180)
+
 	//maxSlope = Math.random(9) * 10
 
 	if(wheel_y > wheel_start_y - max_slope){
 		wheel_y--
 		wheel1_x+=slope;
+
+		// 1.4 comes from where?
+		angle += slope * 1.98;  
 	}
+
 	
 	
 	//return slope
@@ -115,12 +143,13 @@ function render(someArray){
 	
 	for(var i = 0; i<someArray.length; i++){	
 		//console.log(someArray[i]);
-		translate(280, 280); 
-		rotate(45);
+
+		
 		if(someArray[i].type == 'ellipse'){
 		ellipse(someArray[i].x, someArray[i].y, someArray[i].width, someArray[i].height)
 			}
 		if(someArray[i].type == 'rec'){
+			rotate(3.141592653589793 * angle/180);
 		rect(someArray[i].x, someArray[i].y, someArray[i].width, someArray[i].height)
 		}
 		}
@@ -136,15 +165,16 @@ function displacement(pressure, mass){
 	var speed = 1.
 
 
-	// lets try adding force
-	bono = (bono + this.force(pressure,mass)) * speed
-	//console.log(this.force(pressure,mass))
-	//this.force(pressure,mass) * 3
+	// lets try adding kung_fu
+	wheel1_x = (wheel1_x + this.kung_fu(pressure,mass)) * speed
+	wheel2_x = (2*average) + wheel1_x
+	//console.log(this.kung_fu(pressure,mass))
+	//this.kung_fu(pressure,mass) * 3
 
 	//should not reverse
 }
 
-function force(pitch, mass){
+function kung_fu(pitch, mass){
 		// initialize()
 
 	var rest;
@@ -174,7 +204,7 @@ function force(pitch, mass){
 		}
 
 	if (tuskey == invertIntergral_velocity){
-		console.log("max speed")
+		//console.log("max speed")
 		vSwitch = false;
 		tuskey--;
 
@@ -200,6 +230,8 @@ function force(pitch, mass){
 	// end displayment = distance + start displacement
 	return velocity 
 		}
+
+
 
 function setup(){
   createCanvas(780,270)
@@ -228,9 +260,20 @@ function render(someArray){
 function draw() {
   // put drawing code here
   background(50,196,223);
-  //how to calculate pitch. Pitch = force at lim x-> 0
+  //how to calculate pitch. Pitch = kung_fu at lim x-> 0
   //this.displacement(6,7)
   this.random_slope()  
+
+  //rotate(3.141592653589793 * angle/180);
+  //console.log(this.skateboard()[0].x)
   this.render(this.skateboard())
   //ellipse(160, 210, 20, 40)
+
+  translate(this.skateboard()[0].x ,
+	this.skateboard()[0].y)
+  rotate(3.141592653589793 * angle/180);
+  rect(-15,
+	-20,
+	170,
+	3)
 }
