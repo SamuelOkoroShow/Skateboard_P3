@@ -11,19 +11,24 @@ var truckReducers = 10;
 
 //init truttle
 var vSwitch = true;
-
+var wheel_start_y = 250;
+var wheel1_x = 30
+var average = 90
+var wheel2_x = (2*average) - wheel1_x
+var wheel_y = wheel_start_y
 function skateboard(){ 
+
 var wheel1 = {
 	type:'ellipse',
-	x:bono,
-	y:250,
+	x:wheel1_x,
+	y:wheel_y,
 	width:24,
 	height:24
 }
 var wheel2= {
 	type:'ellipse',
-	x:wheel1.x+80,
-	y:250,
+	x:wheel2_x,
+	y:wheel_start_y,
 	width:24,
 	height:24
 }
@@ -81,17 +86,37 @@ var skateboard = [wheel1,screw1, wheel2, screw2, deck1, deck3]
 return skateboard
 }
 var force;
-
+var slope = 1/4
+;
+var folcrum;
+var max_slope = 30
 function coast50(){
 	
+}
+
+// Only the deck rotates
+
+function random_slope(){
+	// use this to anchor slope force
+	//maxSlope = Math.random(9) * 10
+
+	if(wheel_y > wheel_start_y - max_slope){
+		wheel_y--
+		wheel1_x+=slope;
+	}
+	
+	
+	//return slope
 }
 
 
 function render(someArray){
 
-
+	
 	for(var i = 0; i<someArray.length; i++){	
 		//console.log(someArray[i]);
+		translate(280, 280); 
+		rotate(45);
 		if(someArray[i].type == 'ellipse'){
 		ellipse(someArray[i].x, someArray[i].y, someArray[i].width, someArray[i].height)
 			}
@@ -175,3 +200,37 @@ function force(pitch, mass){
 	// end displayment = distance + start displacement
 	return velocity 
 		}
+
+function setup(){
+  createCanvas(780,270)
+}
+
+
+function render(someArray){
+		
+	strokeWeight(1);
+	for(var i = 0; i<someArray.length; i++){	
+		//console.log(someArray[i]);
+		if(someArray[i].type == 'ellipse'){
+			
+		ellipse(someArray[i].x, someArray[i].y, someArray[i].width, someArray[i].height)
+			}
+		if(someArray[i].type == 'rec'){
+		rect(someArray[i].x, someArray[i].y, someArray[i].width, someArray[i].height)
+		}
+		}
+
+}
+
+
+
+
+function draw() {
+  // put drawing code here
+  background(50,196,223);
+  //how to calculate pitch. Pitch = force at lim x-> 0
+  //this.displacement(6,7)
+  this.random_slope()  
+  this.render(this.skateboard())
+  //ellipse(160, 210, 20, 40)
+}

@@ -3,6 +3,8 @@
 // landscape at 16:9 vision
 const landscape = [16,9]
 
+//Stafe left, Stafe right.
+
 var angle = 0.0;
 
 // Avatar global variables
