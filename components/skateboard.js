@@ -110,33 +110,70 @@ var kung_fu;
 var slope = 1/4;
 angle = -0
 var folcrum;
-var max_slope = 30
+
+var floors = [0,1,2,3,4,5]
+
+
+// max slope is determined by folcrum. Should be a range
+var max_slope = 8 * floors[4]
+
 function coast50(){
 	
 }
 
 // Only the deck rotates
 
-function random_slope(){
+function random_slope(floor){
 	// use this to anchor slope kung_fu
 
 
 	//console.log(3.141592653589793 * angle/180)
 
 	//maxSlope = Math.random(9) * 10
+	var fSwitch= false;
 
 	if(wheel_y > wheel_start_y - max_slope){
-		wheel_y--
-		wheel1_x+=slope;
-
-		// 1.4 comes from where?
-		angle += slope * 1.98;  
+		// Wheel_start_y is ground
+		fSwitch = true
+	}
+	if(wheel_y < wheel_start_y - max_slope){
+		// Wheel_start_y is ground
+		fSwitch = false
+	}
+	if(wheel_y == wheel_start_y - max_slope){
+		// Wheel_start_y is ground
+		console.log('you have arived at your destination')
 	}
 
-	
+
+	if(fSwitch){
+		wheel_y--;
+		wheel1_x+=slope;
+
+		angle += slope * 1.98;
+
+		// This is pump  
+		if(wheel_y > wheel_start_y == max_slope){
+			
+		}
+	}
+	if(!fSwitch){
+		wheel_y--;
+		wheel1_x+=slope;
+
+		angle += slope * 1.98;
+
+		// This is pump  
+		if(wheel_y > wheel_start_y == max_slope){
+		}
+	}
+
+console.log(wheel_y)
+
 	
 	//return slope
 }
+
 
 
 function render(someArray){
@@ -164,6 +201,9 @@ function displacement(pressure, mass){
 	dSwitch = true
 	//fast
 	var speed = 1.
+
+	//Ask Valerie for Work
+
 
 
 	// lets try adding kung_fu
