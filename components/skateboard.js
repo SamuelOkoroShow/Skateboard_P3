@@ -22,11 +22,12 @@ var radians =  3.141592653589793 * angle/180
 var vSwitch = true;
 var wheel_start_y = 250;
 var wheel1_x = 20;
-var average = 80;
-var wheel2_x = (2*average) - wheel1_x
+var wheel2_x;
+var average = 56;
 var wheel_y = wheel_start_y
 
 function skateboard(){ 
+wheel2_x = (2*average) + wheel1_x
 
 var wheel1 = {
 	id: 0,
@@ -167,7 +168,7 @@ function displacement(pressure, mass){
 
 	// lets try adding kung_fu
 	wheel1_x = (wheel1_x + this.kung_fu(pressure,mass)) * speed
-	wheel2_x = (2*average) + wheel1_x
+	//wheel2_x = (2*average) + wheel1_x
 	//console.log(this.kung_fu(pressure,mass))
 	//this.kung_fu(pressure,mass) * 3
 
@@ -261,7 +262,7 @@ function draw() {
   // put drawing code here
   background(50,196,223);
   //how to calculate pitch. Pitch = kung_fu at lim x-> 0
-  //this.displacement(6,7)
+  this.displacement(3,7)
   this.random_slope()  
 
   //rotate(3.141592653589793 * angle/180);
@@ -273,7 +274,7 @@ function draw() {
 	this.skateboard()[0].y)
   rotate(3.141592653589793 * angle/180);
   rect(-15,
-	-20,
+	-15,
 	170,
 	3)
 }
