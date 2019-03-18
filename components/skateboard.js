@@ -111,67 +111,116 @@ var slope = 1/4;
 angle = -0
 var folcrum;
 
-var floors = [0,1,2,3,4,5]
 
 
 // max slope is determined by folcrum. Should be a range
-var max_slope = 8 * floors[4]
-
+var elevator = 8 ;
 function coast50(){
 	
 }
 
+var pluggered = false;
 // Only the deck rotates
 
-function random_slope(floor){
-	// use this to anchor slope kung_fu
+// current floor belongs to global state
+var current_floor = 0
 
+function lazer(floor){
+	console.log(current_floor)
+	if(floor > current_floor){
+		this.popup(floor)
+	}else{
+		this.popdown(floor)
+	}
+}
+
+function popdown(floor){
+// use this to anchor slope kung_fu
+	elevator = 8 * floor
+//console.log(elevator)
 
 	//console.log(3.141592653589793 * angle/180)
 
 	//maxSlope = Math.random(9) * 10
 	var fSwitch= false;
 
-	if(wheel_y > wheel_start_y - max_slope){
+	if(wheel_y < wheel_start_y - elevator){
 		// Wheel_start_y is ground
 		fSwitch = true
+		
+		
 	}
-	if(wheel_y < wheel_start_y - max_slope){
+	if(wheel_y == wheel_start_y - elevator){
 		// Wheel_start_y is ground
-		fSwitch = false
-	}
-	if(wheel_y == wheel_start_y - max_slope){
-		// Wheel_start_y is ground
-		console.log('you have arived at your destination')
-	}
+		//console.log('you have arived at your destination')
+		pluggered = true
+		//console.log("Disgusting Sushi")
+		current_floor = floor
 
+	}		
 
-	if(fSwitch){
-		wheel_y--;
-		wheel1_x+=slope;
+	//console.log(fSwitch)
+	if(fSwitch == true){
+		
+		//console.log(angle)
+		wheel_y++;
+		wheel1_x-=slope;
 
-		angle += slope * 1.98;
+		angle -= slope * 1.98;
 
 		// This is pump  
-		if(wheel_y > wheel_start_y == max_slope){
+		if(wheel_y > wheel_start_y == elevator){
 			
 		}
 	}
-	if(!fSwitch){
+
+	//return console.log(slope) slope
+}
+
+
+function popup(floor){
+	// use this to anchor slope kung_fu
+	elevator = 8 * floor
+
+	//console.log(3.141592653589793 * angle/180)
+
+	//maxSlope = Math.random(9) * 10
+	var fSwitch= false;
+
+	if(wheel_y > wheel_start_y - elevator){
+		// Wheel_start_y is ground
+		fSwitch = true
+		console.log(elevator)
+		
+	}
+	if(wheel_y == wheel_start_y - elevator){
+		// Wheel_start_y is ground
+		console.log('you have arived at your destination')
+		pluggered = true
+		current_floor = floor
+		console.log("Disgusting Sushi")
+
+	}		
+
+	//console.log(fSwitch)
+	if(fSwitch == true){
+		
+		console.log(current_floor)
 		wheel_y--;
 		wheel1_x+=slope;
 
 		angle += slope * 1.98;
 
 		// This is pump  
-		if(wheel_y > wheel_start_y == max_slope){
+		if(wheel_y > wheel_start_y == elevator){
+			
 		}
 	}
+	
 
-console.log(wheel_y)
 
 	
-	//return slope
+	//return console.log(slope) slope
 }
 
 
@@ -254,7 +303,7 @@ function kung_fu(pitch, mass){
 		
 		motion = "decelerating"
 		tuskey--;
-		velocity = tuskey/10
+		velocity = tuskey/5
 
 	}
 
@@ -262,10 +311,10 @@ function kung_fu(pitch, mass){
 			velocity = 0
 		}
 
-		if(vSwitch)
-		console.log("invertIntergral :" + invertIntergral_velocity+ "Skate_Velocity = " + velocity + motion)
-		else
-		 console.log("min :" + 0 + "In Motion Skate_Velocity = " + velocity + motion)
+		//if(vSwitch)
+		//console.log("invertIntergral :" + invertIntergral_velocity+ "Skate_Velocity = " + velocity + motion)
+		//else
+		 //console.log("min :" + 0 + "In Motion Skate_Velocity = " + velocity + motion)
 		
 
 	// end displayment = distance + start displacement
@@ -296,6 +345,27 @@ function render(someArray){
 }
 
 
+var music = 3;
+    this.setTimeout(() => {
+  	music = 1;
+
+  }, 1000)
+          this.setTimeout(() => {
+  	music = 4;
+
+  }, 2000)
+     this.setTimeout(() => {
+  	music = 5;
+
+  }, 3000)
+          this.setTimeout(() => {
+  	music = 2;
+
+  }, 4000)
+             this.setTimeout(() => {
+  	music = 0;
+
+  }, 4000)
 
 
 function draw() {
@@ -303,13 +373,22 @@ function draw() {
   background(50,196,223);
   //how to calculate pitch. Pitch = kung_fu at lim x-> 0
   this.displacement(3,7)
-  this.random_slope()  
+
+
+
+
+
+pluggered = false
+
+  pluggered = false
+
+
+  this.lazer(music)
 
   //rotate(3.141592653589793 * angle/180);
   //console.log(this.skateboard()[0].x)
   this.render(this.skateboard())
   //ellipse(160, 210, 20, 40)
-
   translate(this.skateboard()[0].x ,
 	this.skateboard()[0].y)
   rotate(3.141592653589793 * angle/180);
