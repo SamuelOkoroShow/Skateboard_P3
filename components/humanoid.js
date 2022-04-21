@@ -135,4 +135,12 @@ function spider_axel(){
 	// This gives our character a cool dancer feel
 	//	setTimeout() new route = old route - time
 }
+function setup(){
+	createCanvas(780,770)
+  }
+
+function draw (){
+	background(50,196,223);
+	this.display(this.shoulderhips());
+}
 

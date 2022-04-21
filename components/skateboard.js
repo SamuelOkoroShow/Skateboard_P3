@@ -225,7 +225,7 @@ function popup(floor){
 
 
 
-function render(someArray){
+const render = (someArray) => {
 
 	
 	for(var i = 0; i<someArray.length; i++){	
@@ -373,12 +373,6 @@ function draw() {
   background(50,196,223);
   //how to calculate pitch. Pitch = kung_fu at lim x-> 0
   this.displacement(3,7)
-
-
-
-
-
-pluggered = false
 
   pluggered = false
 

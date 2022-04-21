@@ -72,3 +72,4 @@ var deck3 = {
 	y:236,
 	width:170,
 	height:3
+};
